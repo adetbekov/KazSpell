@@ -6,7 +6,8 @@ ENV AWS_SECRET_ACCESS_KEY=ULPhltAXq3SAqLl4pUIImz9kUa8ZIP01wu5dgchs
 ENV METAFLOW_S3_ENDPOINT_URL=http://10.243.219.93:32000
 
 # Install Metaflow (and any other dependencies)
-RUN pip install metaflow
+RUN pip install poetry
+RUN poetry install
 
 # (Optionally, copy an entrypoint script if needed)
 # COPY entrypoint.sh /entrypoint.sh
