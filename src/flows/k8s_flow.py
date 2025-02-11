@@ -1,17 +1,14 @@
-import os
-import time
-import subprocess
-import pynvml
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
+# import torch
 
 # Load environment variables from .env file
-load_dotenv()
+# load_dotenv()
 
 from metaflow import FlowSpec, step, kubernetes, secrets, pypi_base
 
-@pypi_base(python='3.9.13',
-        packages={'python-dotenv': "1.0.1", 'metaflow': "2.12.28", 'nvidia-ml-py': "12.570.86"}
-    )
+# @pypi_base(python='3.11',
+#     packages={'python-dotenv': "1.0.1"}
+# )
 class KubernetesFlow(FlowSpec):
     
     @step
@@ -23,24 +20,11 @@ class KubernetesFlow(FlowSpec):
     @kubernetes(cpu=1, memory=1024, secrets=['minio-creds'])
     @step
     def k8s_step(self):
-        try:
-            import pynvml
-        except ImportError:
-            print("nvidia-ml-py3 is not installed.")
-            self.next(self.end)
-            return
+        import pynvml
+        # print(pynvml.)
+        # print("Torch available:", torch.cuda.is_available())
+        # print("Count device:", torch.cuda.device_count())
 
-        try:
-            pynvml.nvmlInit()
-            device_count = pynvml.nvmlDeviceGetCount()
-            print(f"Found {device_count} GPU(s).")
-            for i in range(device_count):
-                handle = pynvml.nvmlDeviceGetHandleByIndex(i)
-                name = pynvml.nvmlDeviceGetName(handle)
-                print(f"GPU {i}: {name.decode('utf-8') if isinstance(name, bytes) else name}")
-            pynvml.nvmlShutdown()
-        except pynvml.NVMLError as e:
-            print("NVML error:", e)
         self.next(self.end)
     
     @step
