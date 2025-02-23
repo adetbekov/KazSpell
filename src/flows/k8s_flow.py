@@ -4,7 +4,19 @@ import torch
 # Load environment variables from .env file
 # load_dotenv()
 
-from metaflow import FlowSpec, step, kubernetes, secrets, pypi_base
+from metaflow import FlowSpec, step, kubernetes, secrets, pypi_base, resources
+
+import subprocess
+
+def check_nvidia_smi():
+    try:
+        result = subprocess.run(["nvidia-smi"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode == 0:
+            print(result.stdout)
+        else:
+            print("Error:", result.stderr)
+    except FileNotFoundError:
+        print("nvidia-smi command not found. Ensure that NVIDIA drivers and CUDA are installed.")
 
 # @pypi_base(python='3.11',
 #     packages={'python-dotenv': "1.0.1"}
