@@ -1,5 +1,5 @@
 # from dotenv import load_dotenv
-# import torch
+import torch
 
 # Load environment variables from .env file
 # load_dotenv()
@@ -17,13 +17,11 @@ class KubernetesFlow(FlowSpec):
         self.next(self.k8s_step)
     
     # This step will run in a Kubernetes pod
-    @kubernetes(cpu=1, memory=1024, secrets=['minio-creds'])
+    @kubernetes(gpu=1, image="localhost:5000/metaflow_base:latest", memory=1024, secrets=['minio-creds'])
     @step
     def k8s_step(self):
-        import pynvml
-        # print(pynvml.)
-        # print("Torch available:", torch.cuda.is_available())
-        # print("Count device:", torch.cuda.device_count())
+        print("Torch available:", torch.cuda.is_available())
+        print("Count device:", torch.cuda.device_count())
 
         self.next(self.end)
     

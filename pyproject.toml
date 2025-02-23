@@ -14,11 +14,12 @@ metaflow = "^2.12.28"
 nltk = "^3.9.1"
 ebooklib = "^0.18"
 beautifulsoup4 = "^4.12.3"
-torch = "2.0.1"
+torch = "^2.0.0"
 pandas = "^2.2.3"
 python-dotenv = "^1.0.1"
 kubernetes = "^32.0.0"
 pynvml = "^12.0.0"
+dotenv = "^0.9.9"
 
 
 [tool.poetry.group.dev.dependencies]
